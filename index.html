@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome - SMK ABC Inventory</title>
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #6a11cb, #2575fc);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      margin: 0;
+      line-height: 1.2;
+      text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+      animation: slideInFromBottom 1.5s ease-in-out forwards;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      margin: 1rem 0 2rem;
+      color: #f0f0f0;
+      opacity: 0;
+      animation: fadeInText 2s ease-in-out forwards 0.5s;
+    }
+
+    .btn-primary {
+      padding: 0.8rem 2rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #ff6f61, #ff3f34);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(255, 111, 97, 0.4);
+      transition: all 0.3s ease;
+      animation: bounceIn 1.8s ease-in-out forwards 1s;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(45deg, #ff3f34, #ff6f61);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(255, 111, 97, 0.6);
+    }
+
+    /* Particle Animation */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in-out;
+    }
+
+    .particle:nth-child(1) {
+      top: 20%;
+      left: 15%;
+      animation-delay: 0s;
+    }
+
+    .particle:nth-child(2) {
+      top: 50%;
+      left: 35%;
+      animation-delay: 2s;
+    }
+
+    .particle:nth-child(3) {
+      top: 70%;
+      left: 75%;
+      animation-delay: 4s;
+    }
+
+    .particle:nth-child(4) {
+      top: 30%;
+      left: 90%;
+      animation-delay: 1s;
+    }
+
+    .particle:nth-child(5) {
+      top: 60%;
+      left: 10%;
+      animation-delay: 3s;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes fadeInText {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInFromBottom {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particle Animation -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Selamat Datang di Inventory SMK ABC</h1>
+    <p>Aplikasi ini memudahkan Anda untuk mengelola peminjaman barang bagi siswa dan guru. <br>Login untuk memulai.</br></p>
+    <a href="login.php" class="btn-primary">Login</a>
+  </div>
+</body>
+</html>
