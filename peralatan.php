@@ -333,11 +333,12 @@ if (!isset($_SESSION['username'])) {
                         ?>
                         </select>
                         </div>
+                        <div class="form-group">
                         <label for="nama_merk">Merk</label>
                         <select class="form-control" id="nama_merk" name="nama_merk" required>
                         <option value="" disabled>-- Pilih Merk --</option>
                         <?php
-                        $query_username = "SELECT ID_MERK, NAMA_MERK FROM MERK";
+                        $query_username = "SELECT ID_MERK, NAMA_MERK FROM merk";
                         $result_username = mysqli_query($koneksi, $query_username);
                         while ($row_username = mysqli_fetch_assoc($result_username)) {
                             $selected = ($row_username['ID_MERK'] == $row['ID_MERK']) ? 'selected' : '';
@@ -345,6 +346,7 @@ if (!isset($_SESSION['username'])) {
                         }
                         ?>
                         </select>
+                        </div>
                           <div class="form-group">
                               <label for="Nama_Warna">Warna</label>
                               <select class="form-control" id="Nama_Warna" name="Nama_Nama_WarnaMerk" required onchange="handleStatusChange('edit')">
