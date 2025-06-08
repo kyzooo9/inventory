@@ -1,11 +1,11 @@
 <?php
 session_start();
-require 'koneksi.php'; // Menggunakan koneksi Anda
+require 'koneksi.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
-
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     // Cek input kosong
     if (!empty($username) && !empty($password)) {
         // Query ke database

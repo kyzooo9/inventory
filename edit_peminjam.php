@@ -15,10 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $keterangan_peringatan = "Tidak ada";
     }
 
-    // Debugging: Check file upload
-    echo "<pre>";
-    print_r($_FILES);
-    echo "</pre>";
 
     // Periksa apakah file gambar baru diunggah
     $image_peminjam = $old_image_peminjam; // Default ke gambar lama
@@ -50,12 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
     }
-
-    // Hash the password
-    $hashed_password = password_hash($password_peminjam, PASSWORD_DEFAULT);
-
-    // Debugging: Check new image filename
-    echo "New image filename: " . $image_peminjam;
 
     // Query untuk update data peminjam
     $query = "UPDATE peminjam SET KODE_PEMINJAM = ?, USERNAME_PEMINJAM = ?, PASSWORD_PEMINJAM = ?, STATUS_PEMINJAM = ?, KETERANGAN_PERINGATAN = ?, ROLE = ?, IMAGE_PEMINJAM = ? WHERE ID_PEMINJAM = ?";
