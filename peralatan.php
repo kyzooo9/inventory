@@ -345,16 +345,6 @@ if (!isset($_SESSION['username'])) {
                         }
                         ?>
                         </select>
-                        </div>
-
-                          <div class="form-group">
-                              <label for="Nama_Merk">Merk</label>
-                              <select class="form-control" id="Nama_Merk" name="Nama_Merk" required onchange="handleStatusChange('edit')">
-                                  <option value="" disabled selected>-- Pilih Merk --</option>
-                                 <option value="Aktif" <?= ($row['NAMA_MERK'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
-                                  <option value="Tidak Aktif" <?= ($row['NAMA_MERK'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
-                              </select>
-                          </div>
                           <div class="form-group">
                               <label for="Nama_Warna">Warna</label>
                               <select class="form-control" id="Nama_Warna" name="Nama_Nama_WarnaMerk" required onchange="handleStatusChange('edit')">
