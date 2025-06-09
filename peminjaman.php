@@ -171,9 +171,8 @@ if (!isset($_SESSION['username'])) {
                                             <form action="edit_peminjaman.php" method="post" >
                                                 <div class="modal-body">
                                                     <input type="hidden" name="id_peminjaman" class="form-control" value="<?= $row['ID_PEMINJAMAN'] ?>">
-                                                    
                                                     <div class="form-group">
-                                                        <label for="kode_peminjaman">Kode [eminjaman</label>
+                                                        <label for="kode_peminjaman">Kode Peminjaman</label>
                                                         <input type="text" class="form-control" name="kode_peminjaman" id="kode_peminjaman" value="<?= $row['KODE_PEMINJAMAN'] ?>" readonly>
                                                     </div>
                                                     <div class="form-group">
@@ -451,10 +450,6 @@ if (!isset($_SESSION['username'])) {
 <!-- overlayScrollbars -->
 <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>  
+<script src="dist/js/adminlte.js"></script> 
 </body>
 </html>

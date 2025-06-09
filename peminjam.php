@@ -160,7 +160,7 @@ if (!isset($_SESSION['username'])) {
                                                       <input type="hidden" name="id_peminjam" value="<?= $row['ID_PEMINJAM']; ?>">
                                                       <div class="form-group">
                                                           <label>Kode Peminjam</label>
-                                                          <input type="text" name="kode_peminjam" id="kode_peminjam" class="form-control" value="<?= $row['KODE_PEMINJAM']; ?>" required>
+                                                          <input type="text" name="kode_peminjam" id="kode_peminjam" class="form-control" value="<?= $row['KODE_PEMINJAM']; ?>" readonly>
                                                       </div>
                                                       <div class="form-group">
                                                           <label>Username</label>
@@ -427,9 +427,5 @@ function togglePassword(no) {
 <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>  
 </body>
 </html> 

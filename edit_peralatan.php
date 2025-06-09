@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $status_ketersediaan_peralatan = $_POST['status_ketersediaan_peralatan'];
     $aturan_service_peralatan = $_POST['aturan_service_peralatan'];
     $old_image_peralatan = $_POST['old_image_peralatan'];
+var_dump($kode_peralatan, $nama_jenis, $nama_peralatan, $nama_merk, $nama_warna, $tanggal_beli_peralatan, $status_ketersediaan_peralatan, $status_peralatan, $jumlah_kerusakan_peralatan, $aturan_service_peralatan6  );
 
     if ($status_peralatan === "Baik") {
         $jumlah_kerusakan_peralatan = 0;
@@ -50,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            exit;
        }
    }
-
 
     // Jalankan query UPDATE
     $query = "UPDATE peralatan SET 

@@ -111,7 +111,7 @@ if (!isset($_SESSION['username'])) {
                               <th>Merk</th>
                               <th>Warna</th>
                               <th>Tanggal Beli</th>
-                              <th>Status</th>
+                              <th>Status Peralatan</th>
                               <th>Jumlah Rusak</th>
                               <th>Ketersediaan</th>
                               <th>Service</th>
@@ -133,12 +133,14 @@ if (!isset($_SESSION['username'])) {
                                   <td><?= $no++; ?></td>
                                   <td><?= htmlspecialchars($row['KODE_PERALATAN']); ?></td>
                                   <td><?= htmlspecialchars($row['NAMA_PERALATAN']); ?></td>
-                                  <td><?= htmlspecialchars($row['TANGGAL_BELI_PERALATAN	']); ?></td>
+                                  <td><?= htmlspecialchars($row['NAMA_JENIS']); ?></td>
+                                  <td><?= htmlspecialchars($row['NAMA_MERK']); ?></td>
+                                  <td><?= htmlspecialchars($row['NAMA_WARNA']); ?></td>
+                                  <td><?= htmlspecialchars($row['TANGGAL_BELI_PERALATAN']); ?></td>
                                   <td><?= htmlspecialchars($row['STATUS_PERALATAN']); ?></td>
                                   <td><?= htmlspecialchars($row['JUMLAH_KERUSAKAN_PERALATAN']); ?></td>
                                   <td><?= htmlspecialchars($row['STATUS_KETERSEDIAAN_PERALATAN']); ?></td>
                                   <td><?= htmlspecialchars($row['ATURAN_SERVICE_PERALATAN']); ?></td>
-                                  <td><?= htmlspecialchars($row['IMAGE_PERALATAN']); ?></td>
                                   <td>
                                       <?php
                                           $imagePath = htmlspecialchars($row['IMAGE_PERALATAN']);
@@ -168,13 +170,15 @@ if (!isset($_SESSION['username'])) {
                                                   <div class="modal-body">
                                                       <input type="hidden" name="id_peralatan" value="<?= $row['ID_PERALATAN']; ?>">
                                                       <div class="form-group">
-                                                          <label>Kode Peminjam</label>
-                                                          <input type="text" name="kode_peminjam" id="kode_peminjam" class="form-control" value="<?= $row['KODE_PEMINJAM']; ?>" required>
+                                                          <label>Kode Peralatan</label>
+                                                          <input type="text" name="kode_peralatan" id="kode_peralatan" class="form-control" value="<?= $row['KODE_PERALATAN']; ?>" readonly>
                                                       </div>
+                                                     
                                                       <div class="form-group">
                                                           <label>Nama Peralatan</label>
-                                                          <input type="text" name="Nama_Peralatan" class="form-control" value="<?= $row['USERNAME_PERALATAN']; ?>" required>
+                                                          <input type="text" name="nama_peralatan" class="form-control" value="<?= $row['NAMA_PERALATAN']; ?>" required>
                                                       </div>
+                                                      <div class="form-group">
                                                       <label for="nama_jenis">Nama Jenis</label>
                                                             <select class="form-control" id="nama_jenis" name="nama_jenis" required>
                                                             <option value="" disabled>-- Pilih Jenis --</option>
@@ -188,48 +192,71 @@ if (!isset($_SESSION['username'])) {
                                                         ?>
                                                         </select>
                                                         </div>
-                                                      <div class="form-group">
-                                                          <label for="Nama_Merk">Merk</label>
-                                                          <select class="form-control" id="Nama_Merk" name="Nama_Merk" required onchange="handleStatusChange('edit')">
-                                                              <option value="" disabled selected>-- Pilih Merk --</option>
-                                                              <option value="Aktif" <?= ($row['NAMA_MERK'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
-                                                              <option value="Tidak Aktif" <?= ($row['NAMA_MERK'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                                        <div class="form-group">
+                                                        <label for="nama_merk">Merk</label>
+                                                        <select class="form-control" id="nama_merk" name="nama_merk" required>
+                                                        <option value="" disabled selected>-- Pilih Merk --</option>
+                                                        <?php
+                                                        $query_username = "SELECT ID_MERK, NAMA_MERK FROM merk";
+                                                        $result_username = mysqli_query($koneksi, $query_username);
+                                                        while ($row_username = mysqli_fetch_assoc($result_username)) {
+                                                            $selected = ($row_username['ID_MERK'] == $row['ID_MERK']) ? 'selected' : '';
+                                                            echo '<option value="' . $row_username['ID_MERK'] . '" ' . $selected . '>' . htmlspecialchars($row_username['NAMA_MERK']) . '</option>';
+                                                        }
+                                                        ?>
+                                                        </select>
+                                                        </div>
+                                                          <div class="form-group">
+                                                        <label for="nama_warna">Warna</label>
+                                                        <select class="form-control" id="nama_warna" name="nama_warna" required>
+                                                        <option value="" disabled selected>-- Pilih Warna --</option>
+                                                        <?php
+                                                        $query_username = "SELECT ID_WARNA, NAMA_WARNA FROM warna";
+                                                        $result_username = mysqli_query($koneksi, $query_username);
+                                                        while ($row_username = mysqli_fetch_assoc($result_username)) {
+                                                            $selected = ($row_username['ID_WARNA'] == $row['ID_WARNA']) ? 'selected' : '';
+                                                            echo '<option value="' . $row_username['ID_WARNA'] . '" ' . $selected . '>' . htmlspecialchars($row_username['NAMA_WARNA']) . '</option>';
+                                                        }
+                                                        ?>
+                                                        </select>
+                                                        </div>
+                                                          <div class="form-group">
+                                                            <label for="tanggal_beli_peralatan">Tanggal Beli</label>
+                                                            <input type="date" class="form-control" id="tanggal_beli_peralatan" name="tanggal_beli_peralatan"value="<?= $row['TANGGAL_BELI_PERALATAN'] ?>" required >
+                                                          </div>
+                                                        <div class="form-group">
+                                                            <label for="status_peralatan_edit">Status Peralatan</label>
+                                                              <select class="form-control" id="status_peralatan_edit" name="status_peralatan" required onchange="handleStatusChange('edit')">
+                                                            <option value="" disabled selected>-- Pilih Status Peralatan --</option>
+                                                            <option value="Baik" <?= ($row['STATUS_PERALATAN'] == 'Baik') ? 'selected' : ''; ?>>Baik</option>
+                                                              <option value="Buruk" <?= ($row['STATUS_PERALATAN'] == 'Buruk') ? 'selected' : ''; ?>>Buruk</option>
                                                           </select>
-                                                      </div>
-                                                      <div class="form-group">
-                                                          <label for="Nama_Warna">Warna</label>
-                                                          <select class="form-control" id="Nama_Warna" name="Nama_Nama_WarnaMerk" required onchange="handleStatusChange('edit')">
-                                                              <option value="" disabled selected>-- Pilih Warna --</option>
-                                                              <option value="Aktif" <?= ($row['NAMA_WARNA'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
-                                                              <option value="Tidak Aktif" <?= ($row['NAMA_WARNA'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label for="jumlah_kerusakan_peralatan_edit">Jumlah Rusak</label>
+                                                              <input type="int" class="form-control" id="jumlah_kerusakan_peralatan_edit" name="jumlah_kerusakan_peralatan" 
+                                                              value="<?= htmlspecialchars($row['JUMLAH_KERUSAKAN_PERALATAN']); ?>" 
+                                                              <?= ($row['STATUS_PERALATAN'] == 'Baik') ? 'disabled' : ''; ?>> 
+                                                            </div>
+                                                          <div class="form-group">
+                                                            <label for="status_ketersediaan_peralatan">Status Peralatan</label>
+                                                              <select class="form-control" id="status_ketersediaan_peralatan" name="status_ketersediaan_peralatan" >
+                                                            <option value="" disabled selected >-- Pilih Status Ketersediaan Peralatan --</option>
+                                                            <option value="Tersedia" <?= ($row['STATUS_KETERSEDIAAN_PERALATAN'] == 'Tersedia') ? 'selected' : ''; ?>>Tersedia</option>
+                                                            <option value="Tidak Tersedia" <?= ($row['STATUS_KETERSEDIAAN_PERALATAN'] == 'Tidak tersedia') ? 'selected' : ''; ?>>Tidak Tersedia</option>
                                                           </select>
-                                                      </div>
-                                                      <div class="form-group">
-                                                        <label for="tanggal_lahir_guru">Tanggal Beli</label>
-                                                        <input type="date" class="form-control" id="tanggal_beli" name="tanggal_beli" required>
-                                                      </div>
-                                                      <div class="form-group">
-                                                          <label for="keterangan_peringatan_edit">Keterangan Peringatan</label>
-                                                          <input type="text" class="form-control" id="keterangan_peringatan_edit" name="keterangan_peringatan" 
-                                                              value="<?= htmlspecialchars($row['KETERANGAN_PERINGATAN']); ?>" 
-                                                              <?= ($row['STATUS_PEMINJAM'] == 'Tidak Aktif') ? 'disabled' : ''; ?>>
-                                                      </div>
-                                                      <div class="form-group">
-                                                          <label for="role">Role</label>
-                                                          <select class="form-control" id="role" name="role" required>
-                                                              <option value="" disabled selected>-- Pilih Role --</option>
-                                                              <option value="Admin" <?= ($row['ROLE'] == 'Admin') ? 'selected' : ''; ?>>Admin</option>
-                                                              <option value="Guru" <?= ($row['ROLE'] == 'Guru') ? 'selected' : ''; ?>>Guru</option>
-                                                              <option value="Siswa" <?= ($row['ROLE'] == 'Siswa') ? 'selected' : ''; ?>>Siswa</option>
-                                                          </select>
-                                                    </div>
+                                                            </div>
+                                                          <div class="form-group">
+                                                          <label for="aturan_service_peralatan">Aturan Penggunaan</label>
+                                                          <input type="text" class="form-control" id="aturan_service_peralatan" name="aturan_service_peralatan" value="<?= $row['ATURAN_SERVICE_PERALATAN'] ?>" required>
+                                                        </div>
                                                       <div class="form-group" enctype="multipart/form-data">
-                                                        <label>Image Peminjam</label>
-                                                        <input type="file" name="image_peminjam" class="form-control">
-                                                        <input type="hidden" name="old_image_peminjam" value="<?= htmlspecialchars($row['IMAGE_PEMINJAM']); ?>">
+                                                        <label>Image Peralatan</label>
+                                                        <input type="file" name="image_peralatan" class="form-control">
+                                                        <input type="hidden" name="old_image_peralatan" value="<?= htmlspecialchars($row['IMAGE_PERALATAN']); ?>">
                                                         <div class="mt-2">
-                                                            <?php if (!empty($row['IMAGE_PEMINJAM'])): ?>
-                                                                <img src="uploads/<?= htmlspecialchars($row['IMAGE_PEMINJAM']); ?>" alt="Image Peminjam" width="100" class="img-thumbnail">
+                                                            <?php if (!empty($row['IMAGE_PERALATAN'])): ?>
+                                                                <img src="uploads/<?= htmlspecialchars($row['IMAGE_PERALATAN']); ?>" alt="Image Peralatan" width="100" class="img-thumbnail">
                                                             <?php else: ?>
                                                                 <p>Tidak ada gambar yang tersedia</p>
                                                             <?php endif; ?>
@@ -244,21 +271,20 @@ if (!isset($_SESSION['username'])) {
                                           </div>
                                       </div>
                                   </div>  
-
-
+                                </div>
                                   <!-- Modal Hapus -->
                                   <div class="modal fade" id="modalHapus<?= $no ?>" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
                                       <div class="modal-dialog">
                                           <div class="modal-content">
-                                              <form id="formHapus" action="hapus_peminjam.php" method="get">
+                                              <form id="formHapus" action="hapus_peralatan.php" method="get">
                                                   <div class="modal-header">
-                                                      <h5 class="modal-title" id="modalHapusLabel">Hapus Data Peminjam</h5>
+                                                      <h5 class="modal-title" id="modalHapusLabel">Hapus Peralatan</h5>
                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                           <span aria-hidden="true">&times;</span>
                                                       </button>
                                                   </div>
                                                   <div class="modal-body">
-                                                      <input type="hidden" id="id_peminjam" name="id_peminjam" value="<?= $row['ID_PEMINJAM'] ?>">
+                                                      <input type="hidden" id="id_peralatan" name="id_peralatan" value="<?= $row['ID_PERALATAN'] ?>">
                                                       <p>Apakah Anda yakin ingin menghapus data ini?</p>
                                                   </div>
                                                   <div class="modal-footer">
@@ -288,7 +314,7 @@ if (!isset($_SESSION['username'])) {
       <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form id="formTambah" action="tambah_peminjam.php" method="post" enctype="multipart/form-data">
+              <form id="formTambah" action="tambah_peralatan.php" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
                   <h5 class="modal-title">Tambah Data Peminjam</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -316,13 +342,13 @@ if (!isset($_SESSION['username'])) {
                           <input type="text" class="form-control" name="kode_peralatan" id="kode_peralatan" value="<?php echo $newCode; ?>" readonly>
                         </div>
                         <div class="form-group">
-                       <label>Nama Peralatan</label>
-                              <input type="text" name="Nama_Peralatan" class="form-control" value="<?= $row['USERNAME_PERALATAN']; ?>" required>
-                          </div>
+                          <label for="nama_peralatan">Nama_Peralatan</label>
+                          <input type="text" class="form-control" id="nama_peralatan" name="nama_peralatan" required>
+                        </div>
                           <div class="form-group">
                         <label for="nama_jenis">Jenis</label>
                         <select class="form-control" id="nama_jenis" name="nama_jenis" required>
-                        <option value="" disabled>-- Pilih Jenis --</option>
+                        <option value="" disabled selected>-- Pilih Jenis --</option>
                         <?php
                         $query_username = "SELECT ID_JENIS, NAMA_JENIS FROM jenis";
                         $result_username = mysqli_query($koneksi, $query_username);
@@ -336,7 +362,7 @@ if (!isset($_SESSION['username'])) {
                         <div class="form-group">
                         <label for="nama_merk">Merk</label>
                         <select class="form-control" id="nama_merk" name="nama_merk" required>
-                        <option value="" disabled>-- Pilih Merk --</option>
+                        <option value="" disabled selected>-- Pilih Merk --</option>
                         <?php
                         $query_username = "SELECT ID_MERK, NAMA_MERK FROM merk";
                         $result_username = mysqli_query($koneksi, $query_username);
@@ -348,22 +374,55 @@ if (!isset($_SESSION['username'])) {
                         </select>
                         </div>
                           <div class="form-group">
-                              <label for="Nama_Warna">Warna</label>
-                              <select class="form-control" id="Nama_Warna" name="Nama_Nama_WarnaMerk" required onchange="handleStatusChange('edit')">
-                                  <option value="" disabled selected>-- Pilih Warna --</option>
-                                  <option value="Aktif" <?= ($row['NAMA_WARNA'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
-                                  <option value="Tidak Aktif" <?= ($row['NAMA_WARNA'] == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
-                              </select>
-                          </div>
+                        <label for="nama_warna">Warna</label>
+                        <select class="form-control" id="nama_warna" name="nama_warna" required>
+                        <option value="" disabled selected>-- Pilih Warna --</option>
+                        <?php
+                        $query_username = "SELECT ID_WARNA, NAMA_WARNA FROM warna";
+                        $result_username = mysqli_query($koneksi, $query_username);
+                        while ($row_username = mysqli_fetch_assoc($result_username)) {
+                            $selected = ($row_username['ID_WARNA'] == $row['ID_WARNA']) ? 'selected' : '';
+                            echo '<option value="' . $row_username['ID_WARNA'] . '" ' . $selected . '>' . htmlspecialchars($row_username['NAMA_WARNA']) . '</option>';
+                        }
+                        ?>
+                        </select>
+                        </div>
                           <div class="form-group">
-                            <label for="tanggal_lahir_guru">Tanggal Beli</label>
-                            <input type="date" class="form-control" id="tanggal_beli" name="tanggal_beli" required>
+                            <label for="tanggal_beli_peralatan">Tanggal Beli</label>
+                            <input type="date" class="form-control" id="tanggal_beli_peralatan" name="tanggal_beli_peralatan" required>
                           </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Tambah</button>
-                  </div>
+                         <div class="form-group">
+                            <label for="status_peralatan_tambah">Status Peralatan</label>
+                              <select class="form-control" id="status_peralatan_tambah" name="status_peralatan" required onchange="handleStatusChange('tambah')">
+                            <option value="" disabled selected>-- Pilih Status Peralatan --</option>
+                            <option value="Baik">Baik</option>
+                            <option value="Buruk">Buruk</option>
+                           </select>
+                            </div>
+                             <div class="form-group">
+                              <label for="jumlah_kerusakan_peralatan_tambah">Jumlah Rusak</label>
+                              <input type="int" class="form-control" id="jumlah_kerusakan_peralatan_tambah" name="jumlah_kerusakan_peralatan" disabled>
+                            </div>
+                          <div class="form-group">
+                            <label for="status_ketersediaan_peralatan">Status Peralatan</label>
+                              <select class="form-control" id="status_ketersediaan_peralatan" name="status_ketersediaan_peralatan" required onchange="handleStatusChange('tambah')">
+                            <option value="" disabled selected>-- Pilih Status Ketersediaan Peralatan --</option>
+                            <option value="Tersedia">Tersedia</option>
+                            <option value="Tidak Tersedia">Tidak Tersedia</option>
+                           </select>
+                            </div>
+                          <div class="form-group">
+                          <label for="aturan_service_peralatan">Aturan Penggunaan</label>
+                          <input type="text" class="form-control" id="aturan_service_peralatan" name="aturan_service_peralatan" required>
+                        </div>
+                        <div class="form-group" >
+                            <label for="image_peralatan">Image Peralatan</label>
+                            <input type="file" class="form-control-file" id="image_peralatan" name="image_peralatan" required>
+                        </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">Tambah</button>
+                      </div>
               </form>
             </div>
           </div>
@@ -385,42 +444,26 @@ if (!isset($_SESSION['username'])) {
 <!-- jQuery -->
 
 <script>
-function togglePassword(no) {
-    const passwordInput = document.getElementById(`passwordInput${no}`);
-    const eyeIcon = document.getElementById(`eyeIcon${no}`);
-    if (passwordInput.type == "password") {
-        passwordInput.type = "text";
-        eyeIcon.classList.remove("fa-eye");
-        eyeIcon.classList.add("fa-eye-slash");
-    } else {
-        passwordInput.type = "password";
-        eyeIcon.classList.remove("fa-eye-slash");
-        eyeIcon.classList.add("fa-eye");
-    }
-}
-</script>
-
-<script>
   // Fungsi handleStatusChange
   function handleStatusChange(mode) {
-      let statusElement, keteranganElement;
+      let statusElement, jumlahElement;
 
       // Sesuaikan elemen berdasarkan mode (tambah/edit)
       if (mode === 'tambah') {
-          statusElement = document.getElementById('status_peminjam_tambah');
-          keteranganElement = document.getElementById('keterangan_peringatan_tambah');
+          statusElement = document.getElementById('status_peralatan_tambah');
+          jumlahElement = document.getElementById('jumlah_kerusakan_peralatan_tambah');
       } else if (mode === 'edit') {
-          statusElement = document.getElementById('status_peminjam_edit');
-          keteranganElement = document.getElementById('keterangan_peringatan_edit');
+          statusElement = document.getElementById('status_peralatan_edit');
+          jumlahElement = document.getElementById('jumlah_kerusakan_peralatan_edit');
       }
 
       // Periksa nilai status
-      if (statusElement.value === 'Aktif') {
-          keteranganElement.disabled = false;
-          keteranganElement.value = ''; // Kosongkan nilai input
-      } else if (statusElement.value === 'Tidak Aktif') {
-          keteranganElement.disabled = true;
-          keteranganElement.value = 'Tidak ada'; // Isi dengan nilai default
+      if (statusElement.value === 'Buruk') {
+          jumlahElement.disabled = false;
+          jumlahElement.value = ''; 
+      } else if (statusElement.value === 'Baik') {
+          jumlahElement.disabled = true;
+          jumlahElement.value = '0'; // Isi dengan nilai default
       }
   }
 
@@ -460,9 +503,6 @@ function togglePassword(no) {
 <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>  
 </body>
 </html> 
